@@ -1,6 +1,6 @@
-# Girder Plugin Test Harness
+# Girder Oauth Plugin Test Harness
 
-Runs the test suite on the Girder Wholetale Plugin in an isolated environment
+Runs the test suite on the Girder Oauth Plugin in an isolated environment
 
 
 ## Prerequisites:
@@ -10,7 +10,7 @@ Runs the test suite on the Girder Wholetale Plugin in an isolated environment
 ## Building the Image
 Use the usual command to build up our Docker image:
 ```bash
-docker build -t wholetale/girder:test-harness .
+docker build -t eliasmarkc/girder:test-harness .
 ```
 This image contains:
 * Python 3.7
@@ -28,13 +28,13 @@ While everything else is baked into the Docker image here, we should run an addi
 
 You can run an instance MongoDB with the following command:
 ```bash
-docker run -itd --name=test-mongo -p 27017:27017 -v ${HOME}/mongodata/test:/data/db mongo
+docker run -itd --name=test-mongo -p 27017:27017 --net=host mongo
 ```
 
 
 ### Running the Tests
 Run the following command to build and run the plugin tests:
 ```bash
-docker run --rm -it -v ${HOME}/deploy-dev/src/wholetale/:/girder/plugins/wholetale wholetale/girder:test-harness
+docker run --rm -it -v ~/projects/girder/plugins/oauth/:/girder/plugins/oauth --net=host eliasmarkc/girder:test-harness
 ```
 NOTE: Depending on your environment, you may need to specify `--net=host` on the above for your Girder tests to access your test MongoDB instance.
